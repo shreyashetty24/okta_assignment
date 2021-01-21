@@ -44,6 +44,8 @@ def dashboard():
 @app.route("/admin_dashboard")
 @oidc.require_login
 def admin_dashboard():
+    if not g.user:
+        return {"response": "Please log in as Admin to access this page"}
     me_id = g.user.id
     group_ids = list_group_ids_for_user(me_id)
     is_admin = ADMIN_GROUP_ID in group_ids
